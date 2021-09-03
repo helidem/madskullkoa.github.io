@@ -32,7 +32,9 @@ let a = "bonjour";
 let a = true;
 let b = false;
 ```
+
 - **object** : Exemples : `Date, Math, String, Number, Boolean, JSON, window, document,` etc.
+
 ```javascript
 let a = {a: 4, b: "bonjour"}; //expression littérale
 let b = new Date(); //instanciation d'un objet à partir de l'objet de type natif Date()
@@ -48,7 +50,7 @@ let b = a(); // appelle la fonction a et retourne 5
 
 ### 1.2.1 Conditionnelles
 
-__Les opérateurs ternaires ? et :__
+__Les opérateurs ternaires `?` et `:`__
 
 Ce sont des raccourcis des blocs `if ... else`.
 ```javascript
@@ -67,7 +69,7 @@ if (i === 1) {
 let i = 1;
 let chaine = 1 == 1 ? "oui" : "non";
 ```
-__Switch...case...break__
+__`Switch...case...break`__
 
 Comme en C.
 ```javascript
@@ -83,7 +85,7 @@ switch (var) {
 
 ### 1.2.2 Boucles
 
-__for, do...while, while__
+__`for`, `do...while`, `while`__
 Comme en C. 
 - Le `break` permet de sortir de la boucle
 - Le `continue` permet de passer à la prochaine itération sans lire le reste du bloc
@@ -134,9 +136,74 @@ setTimeout((str => {
 	console.log(str);
 }, 1000)); // affiche "Bonjour" au bout d'une seconde
 ```
-Si on utilise une expression à droite de la flèche => plutôt qu'un bloc d'instructions, alors l'expression sera interprétée implicitement avec le mot-clé `return` devant :
+Si on utilise une expression à droite de la flèche `=>` plutôt qu'un bloc d'instructions, alors l'expression sera interprétée implicitement avec le mot-clé `return` devant :
 ```javascript
 const add = (x) => 3 + 4;
 let somme = add(); // 7
 ```
 
+### 1.3.4 Fonctions anonymes autoexécutantes
+Ces fonctions, aussi appelées IIFE sont des fonctions appelées dès qu'elles sont définies.
+
+```javascript
+(function () {
+    var x = 1; // ici x ne remonte pas dans le contexted'execution global
+});
+```
+
+- Une deuxième paire de parenthèses crée la fonction directement exécutable
+
+```javascript
+(function (){ console.log("hello");}) (); // affiche "hello"
+var resultat = (function () {return 1}) ();
+console.log(resultat); // affiche 1
+```
+
+## 1.4 Manipulation de tableaux
+
+### 1.4.1 Déclarer, lire, modifier, supprimer des éléments
+
+```javascript
+let tab = ["pomme", "banane", "orange"];
+let tab2 = Array("pomme", "banane", "orange");
+```
+
+- Pour lire, on utilise l'indice, comme en C.
+- Pour remplir, 
+  - on peut utiliser directement l'indice.
+  - on peut utiliser `push` pour l'ajouter à la fin.
+  - on peut utiliser `unshift` pour ajouter un ou plusieurs éléments au début d'un tableau.
+- Pour retirer,
+  - on peut utiliser `delete` à un indice donné, sans changer l'indice des autres : il remplace tout simplement par `undefined`
+  - on peut utiliser `shift` pour retirer le 1er element et le retourner
+  - on peut utiliser `pop` pour retirer le dernier element et le retourner
+  - on peut utiliser `splice` pour retirer un ou plusieurs élements a partir d'un indice donné
+
+On peut retirer une valeur donnée avec `indexOf()`
+```javascript
+let tab = ["pomme", "banane", "orange"];
+
+//supprimer la valeur orange
+let index = tab.indexOf("orange"); //renvoie -1 si non trouvé
+
+if (index >= 0){
+    tab.splice(index,1);
+}
+```
+
+### 1.4.2 Itérer sur un tableau
+Tu peux faire comme en Java, ou bien avec un `forEach` et une fonction fléchée : 
+```javascript
+let tab = ["pomme", "banane", "orange"];
+
+tab.forEach((elmt, index) => console.log(elmt));
+```
+
+Pour faire un traitement sur chaque élement, tu peux utiliser `map` : elle retourne un nouveau tableau avec le résultat de la fonction fournie en paramètre.
+```javascript
+let tab = ["pomme", "banane", "orange"];
+
+// passer tous les mots au pluriel
+tab = tab.map(elmt => elmt + "s");
+console.log(tab); // ["pommes", "bananes", "oranges"]
+```
